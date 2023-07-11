@@ -1,0 +1,27 @@
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coffeepy"
+version = "0.1.0"
+authors = [
+  { name="Jukka Maatta", email="kuvaus@users.noreply.github.com" },
+]
+description = "Coffee prevents the system from sleeping"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.scripts]
+coffeepy = "coffeepy.main:main"
+
+[project.urls]
+"Homepage" = "https://github.com/kuvaus/coffee"
+"Bug Tracker" = "https://github.com/kuvaus/coffee/issues"
+
