@@ -30,7 +30,7 @@ def check_caffeinate():
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Coffee ☕️ prevents the system from sleeping.\n'
+    parser = argparse.ArgumentParser(description='Coffeepy ☕️ prevents the system from sleeping.\n'
                                                  'You can set the time with -t flag\n'
                                                  'Made by kuvaus',
                                                  formatter_class=argparse.RawTextHelpFormatter)
@@ -46,11 +46,11 @@ def main():
     proc = None
 
     if 'darwin' in sys.platform:
-        print('Running \'coffee\' on MacOS to prevent the system from sleeping')
+        print('Running \'coffeepy\' on MacOS to prevent the system from sleeping')
         proc = subprocess.Popen(['caffeinate', '-dims'])
 
     elif 'linux' in sys.platform:
-        print('Running \'coffee\' on Linux to prevent the system from sleeping')
+        print('Running \'coffeepy\' on Linux to prevent the system from sleeping')
         if check_caffeinate():
             proc = subprocess.Popen(['caffeinate', '-dims'])
         else:
@@ -58,7 +58,7 @@ def main():
             subprocess.Popen(['xset', '-dpms'])
 
     elif 'win32' in sys.platform:
-        print('Running \'coffee\' on Windows to prevent the system from sleeping')
+        print('Running \'coffeepy\' on Windows to prevent the system from sleeping')
         ctypes.windll.kernel32.SetThreadExecutionState(0x80000002)
 
     print('Press Ctrl-C to quit')
