@@ -1,9 +1,10 @@
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/coffeepy.svg?style=flat)](https://pypi.python.org/pypi/coffeepy/) [![PyPI Version](https://img.shields.io/pypi/v/coffeepy.svg)](https://pypi.python.org/pypi/coffeepy)
 # Coffeepy
 
 Coffeepy ☕️ is a small program that prevents the system from sleeping.
 Works on MacOS, Windows and Linux.
 
-<img alt="coffeepy" src="https://github.com/kuvaus/coffeepy/assets/22169537/d2954958-4c92-4791-92b9-36e46f448abc.gif" width="600" />
+<img alt="coffeepy" src="https://github-production-user-asset-6210df.s3.amazonaws.com/22169537/253075028-9eaccaca-a567-4bd8-86c1-63d4870664ad.gif" width="600" />
 
 ## Installation
 
@@ -34,11 +35,12 @@ You can also import coffeepy as a python module
 import coffeepy
 
 coffeepy.run()
+
+# you can also specify the time in minutes
+coffeepy.run(60)
 ```
 
 
 ## License
 
 This project is licensed under the MIT [License](https://github.com/kuvaus/coffeepy/blob/main/LICENSE)
-
-
