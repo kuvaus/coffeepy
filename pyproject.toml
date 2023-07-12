@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 name = "coffeepy"
 version = "0.1.1"
 authors = [
-  { name="Jukka Maatta", email="kuvaus@users.noreply.github.com" },
+  { name="kuvaus", email="kuvaus@users.noreply.github.com" },
 ]
 description = "Coffeepy prevents the system from sleeping"
 readme = "README.md"
