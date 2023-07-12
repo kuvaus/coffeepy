@@ -1,11 +1,12 @@
-# coffeepy
+# Coffeepy
 
-Coffeepy ☕️ prevents the system from sleeping.
+Coffeepy ☕️ is a small program that prevents the system from sleeping.
+Works on MacOS, Windows and Linux.
 
 ## Installation
 
 ```sh
-pip install coffeepy
+pip install -U coffeepy
 ```
 
 ## Usage
@@ -21,6 +22,16 @@ Optional: You can set the time in minutes with `-t` flag. To run the program for
 
 ```sh
 coffeepy -t 60
+```
+
+## Python module
+
+You can also import coffeepy as a python module
+
+```python
+import coffeepy
+
+coffeepy.run()
 ```
 
 
