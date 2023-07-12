@@ -1,3 +1,6 @@
+
+from importlib.metadata import version
+
 import ctypes
 import sys
 import subprocess
@@ -15,7 +18,7 @@ animation = [
 ]
 
 
-def display_animation(animation):
+def display_animation(animation=animation):
     for frame in animation:
         print('\r' + frame, end='')
         time.sleep(0.5)  # Adjust the delay time as desired
@@ -29,8 +32,8 @@ def check_caffeinate():
         return False
 
 
-def main():
-    parser = argparse.ArgumentParser(description='Coffeepy ☕️ prevents the system from sleeping.\n'
+def run():
+    parser = argparse.ArgumentParser(description='Coffeepy (v'+version('coffeepy')+') ☕️ prevents the system from sleeping.\n'
                                                  'You can set the time with -t flag\n'
                                                  'Made by kuvaus',
                                                  formatter_class=argparse.RawTextHelpFormatter)
@@ -66,7 +69,7 @@ def main():
     try:
         start_time = time.time()
         while time.time() - start_time < duration or duration == float('inf'):
-            display_animation(animation)
+            display_animation()
     except KeyboardInterrupt:
         print('\nExiting')
 
@@ -83,4 +86,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run()
