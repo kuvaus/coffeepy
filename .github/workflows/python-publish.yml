@@ -48,6 +48,15 @@ jobs:
         name: package-artifact
         path: ./dist
 
+    - name: Upload wheel
+      uses: actions/upload-artifact@v3
+      with:
+        path: dist/*.whl
+
+    - name: Upload tar.gz
+      uses: actions/upload-artifact@v3
+      with:
+        path: dist/*.tar.gz
 
   release:
     needs: deploy
@@ -65,15 +74,17 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: Upload release assets
-      uses: softprops/action-gh-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.DEPLOY_KEY }}
+    - name: Download compressed artifacts
+      id: download
+      uses: actions/download-artifact@v3
       with:
-        tag_name: ${{ github.ref_name }}
-        name: Release ${{ github.ref_name }}
-        draft: false
-        prerelease: false
-        files: ./dist/*
+        path: ./artifacts
+
+    - name: Create release and upload wheels
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        artifacts: "${{ steps.download.outputs.download-path }}/**/*.whl,${{ steps.download.outputs.download-path }}/**/*.gz,${{ steps.download.outputs.download-path }}/**/*.zip"
+        token: ${{ secrets.DEPLOY_KEY }}
 
 
