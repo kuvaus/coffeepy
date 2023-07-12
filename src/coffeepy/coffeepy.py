@@ -32,7 +32,7 @@ def check_caffeinate():
         return False
 
 
-def run():
+def run(time=None):
     parser = argparse.ArgumentParser(description='Coffeepy (v'+version('coffeepy')+') ☕️ prevents the system from sleeping.\n'
                                                  'You can set the time with -t flag\n'
                                                  'Made by kuvaus',
@@ -45,7 +45,14 @@ def run():
         duration = float('inf')  # Set duration to infinity
     else:
         duration = args.time * 60  # Convert minutes to seconds
-        
+    
+    #if time is provided as run argument, it will overwrite args
+    #this is only relevant when coffeepy is run as a python module
+    if time is None:
+        duration = duration
+    else:
+        duration = time *60
+
     proc = None
 
     if 'darwin' in sys.platform:
