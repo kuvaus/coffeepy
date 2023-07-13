@@ -3,6 +3,7 @@
 
 #### [Upcoming](https///github.com/kuvaus/coffeepy/compare/v0.1.2...HEAD)
 
+- Add ascii animation [`d87c258`](https///github.com/kuvaus/coffeepy/commit/d87c258)
 
 #### [v0.1.2](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.2)
 
