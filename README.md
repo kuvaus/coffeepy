@@ -26,6 +26,7 @@ Optional: You can set the time in minutes with `-t` flag. To run the program for
 ```sh
 coffeepy -t 60
 ```
+You can also disable animation with `-a` or `--no-animation` flag.
 
 ## Python module
 
