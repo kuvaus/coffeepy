@@ -40,11 +40,11 @@ def check_caffeinate():
 def check_windows_terminal():
     is_windows_terminal = sys.platform == "win32" and os.environ.get("WT_SESSION")
     if is_windows_terminal is not None:
-        return true
+        return True
     else:
-        return false
+        return False
 
-def run(runtime=None):
+def run(runtime=None, no_animation=False):
     parser = argparse.ArgumentParser(description='Coffeepy (v'+version('coffeepy')+') ☕️ prevents the system from sleeping.\n'
                                                  'You can set the time with -t flag\n'
                                                  'Made by kuvaus',
@@ -64,8 +64,14 @@ def run(runtime=None):
     #this is only relevant when coffeepy is run as a python module
     if runtime is None:
         duration = duration
+    elif runtime == 0:
+        duration = float('inf')
     else:
         duration = runtime * 60
+
+    #this disables animation when used as a module
+    if no_animation:
+        args.no_animation = True
 
     proc = None
 

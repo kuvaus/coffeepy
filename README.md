@@ -27,6 +27,9 @@ Optional: You can set the time in minutes with `-t` flag. To run the program for
 coffeepy -t 60
 ```
 You can also disable animation with `-a` or `--no-animation` flag.
+```sh
+coffeepy -a
+```
 
 ## Python module
 
@@ -36,9 +39,19 @@ You can also import coffeepy as a python module
 import coffeepy
 
 coffeepy.run()
+```
+
+Optional settings when run as a python module:
+
+```python
+import coffeepy
 
 # you can also specify the time in minutes
+# if no time is provided or time = 0, the program will run indefinitely
 coffeepy.run(60)
+
+# to disable animation when run as a module, you can set the second argument to True
+coffeepy.run(0, True)
 ```
 
 

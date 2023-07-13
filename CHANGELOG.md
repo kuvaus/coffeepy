@@ -1,14 +1,21 @@
 
 ## Changelog
 
-#### [Upcoming](https///github.com/kuvaus/coffeepy/compare/v0.1.3...HEAD)
+#### [Upcoming](https///github.com/kuvaus/coffeepy/compare/v0.1.4...HEAD)
 
+#### [v0.1.4](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.4)
+
+> 13 July 2023
+
+- Fix bug in checking new Windows Terminal
+- Add ability to specify time=0 when run as a module
+- Add ability to disable animation when run as a module
 
 #### [v0.1.3](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.3)
 
 > 13 July 2023
 
-- Add --no-animation flag
+- Add `--no-animation` flag
 - Add ascii animation on Windows Powershell
 - Fix duration bug from 0.1.2
 
