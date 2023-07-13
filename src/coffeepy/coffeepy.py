@@ -17,6 +17,12 @@ animation = [
     "  ☕️   ",
 ]
 
+ascii_animation = [
+    "  |   ",
+    "  /   ",
+    "  -   ",
+    "  \\   ",
+]
 
 def display_animation(animation=animation):
     for frame in animation:
@@ -31,8 +37,14 @@ def check_caffeinate():
     except subprocess.CalledProcessError:
         return False
 
+def check_windows_terminal():
+    is_windows_terminal = sys.platform == "win32" and os.environ.get("WT_SESSION")
+    if is_windows_terminal is not None:
+        return true
+    else:
+        return false
 
-def run(time=None):
+def run(runtime=None):
     parser = argparse.ArgumentParser(description='Coffeepy (v'+version('coffeepy')+') ☕️ prevents the system from sleeping.\n'
                                                  'You can set the time with -t flag\n'
                                                  'Made by kuvaus',
@@ -48,10 +60,10 @@ def run(time=None):
     
     #if time is provided as run argument, it will overwrite args
     #this is only relevant when coffeepy is run as a python module
-    if time is None:
+    if runtime is None:
         duration = duration
     else:
-        duration = time *60
+        duration = runtime * 60
 
     proc = None
 
@@ -76,7 +88,14 @@ def run(time=None):
     try:
         start_time = time.time()
         while time.time() - start_time < duration or duration == float('inf'):
-            display_animation()
+            if 'win32' in sys.platform:
+                if check_windows_terminal:
+                    display_animation()
+                else:
+                    display_animation(ascii_animation)
+            else:
+                display_animation()
+
     except KeyboardInterrupt:
         print('\nExiting')
 
