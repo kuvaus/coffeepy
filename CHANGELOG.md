@@ -1,9 +1,16 @@
 
 ## Changelog
 
-#### [Upcoming](https///github.com/kuvaus/coffeepy/compare/v0.1.2...HEAD)
+#### [Upcoming](https///github.com/kuvaus/coffeepy/compare/v0.1.3...HEAD)
 
-- Add ascii animation [`d87c258`](https///github.com/kuvaus/coffeepy/commit/d87c258)
+
+#### [v0.1.3](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.3)
+
+> 13 July 2023
+
+- Add --no-animation flag
+- Add ascii animation on Windows Powershell
+- Fix duration bug from 0.1.2
 
 #### [v0.1.2](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.2)
 
