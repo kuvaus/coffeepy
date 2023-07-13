@@ -88,3 +88,52 @@ jobs:
         token: ${{ secrets.DEPLOY_KEY }}
 
 
+
+    #
+    # This part filters the CHANGELOG.md using python
+    # Then it adds FILTERED_CHANGELOG.md to release notes
+    #
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.x
+
+    - name: Filter CHANGELOG.md
+      uses: jannekem/run-python-script-action@v1
+      with:
+        script: |
+          filtered_lines = []
+          start_processing = False
+
+          with open('CHANGELOG.md', 'r') as file:
+            for line in file:
+              if line.startswith("#### [v"):
+                if start_processing:
+                  break
+                else:
+                  file.readline()
+                  file.readline()
+                  start_processing = True
+                  continue
+              if start_processing:
+                filtered_lines.append(line)
+      
+            with open('FILTERED_CHANGELOG.md', 'w') as file:
+              file.writelines(filtered_lines)
+
+    - name: Generate release notes
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.DEPLOY_KEY }}
+      with:
+        tag_name: ${{ github.ref_name }}
+        name: Release ${{ github.ref_name }}
+        body_path: FILTERED_CHANGELOG.md
+        draft: false
+        prerelease: false
+
+
