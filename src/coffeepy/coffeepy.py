@@ -51,6 +51,8 @@ def run(runtime=None):
                                                  formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument('-t', '--time', type=int, default=0, help='Optional: Duration of animation in minutes. Use 0 for indefinite duration')
+    parser.add_argument('-a', '--no-animation', action='store_true', help='Disable animation')
+
     args = parser.parse_args()
 
     if args.time == 0:
@@ -88,13 +90,14 @@ def run(runtime=None):
     try:
         start_time = time.time()
         while time.time() - start_time < duration or duration == float('inf'):
-            if 'win32' in sys.platform:
-                if check_windows_terminal:
-                    display_animation()
+            if not args.no_animation:
+                if 'win32' in sys.platform:
+                    if check_windows_terminal:
+                        display_animation()
+                    else:
+                        display_animation(ascii_animation)
                 else:
-                    display_animation(ascii_animation)
-            else:
-                display_animation()
+                    display_animation()
 
     except KeyboardInterrupt:
         print('\nExiting')
