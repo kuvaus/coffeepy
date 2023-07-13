@@ -6,7 +6,7 @@ import sys
 import subprocess
 import time
 import argparse
-
+import os
 
 animation = [
     "  ☕️   ",
@@ -38,9 +38,11 @@ def check_caffeinate():
         return False
 
 def check_windows_terminal():
-    is_windows_terminal = sys.platform == "win32" and os.environ.get("WT_SESSION")
-    if is_windows_terminal is not None:
-        return True
+    if 'win32' in sys.platform:
+        if os.environ.get("WT_SESSION") is not None:
+            return True
+        else:
+            return False
     else:
         return False
 
@@ -98,7 +100,7 @@ def run(runtime=None, no_animation=False):
         while time.time() - start_time < duration or duration == float('inf'):
             if not args.no_animation:
                 if 'win32' in sys.platform:
-                    if check_windows_terminal:
+                    if check_windows_terminal() == True:
                         display_animation()
                     else:
                         display_animation(ascii_animation)
