@@ -51,7 +51,7 @@ def run(runtime=None):
                                                  formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument('-t', '--time', type=int, default=0, help='Optional: Duration of animation in minutes. Use 0 for indefinite duration')
-    parser.add_argument('-a', '--no-animation', action='store_true', help='Disable animation')
+    parser.add_argument('-a', '--no-animation', action='store_true', help='Optional: Disable animation')
 
     args = parser.parse_args()
 
