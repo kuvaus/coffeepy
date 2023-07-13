@@ -21,7 +21,7 @@ coffeepy
 
 By default the program runs indefinitely. Press `Ctrl-C` to quit
 
-Optional: You can set the time in minutes with `-t` flag. To run the program for 1 hour, use
+Optional: You can set the time in minutes with `-t` or `--time` flag. For example, to run the program for 1 hour, use
 
 ```sh
 coffeepy -t 60
@@ -30,6 +30,7 @@ You can also disable animation with `-a` or `--no-animation` flag.
 ```sh
 coffeepy -a
 ```
+You can view the full parameter list with `-h` or `--help`.
 
 ## Python module
 
