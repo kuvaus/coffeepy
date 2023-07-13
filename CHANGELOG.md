@@ -1,7 +1,14 @@
 
 ## Changelog
 
-#### [Upcoming](https///github.com/kuvaus/coffeepy/compare/v0.1.4...HEAD)
+#### [Upcoming](https///github.com/kuvaus/coffeepy/compare/v0.1.5...HEAD)
+
+
+#### [v0.1.5](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.5)
+
+> 13 July 2023
+
+- Improve terminal checking function
 
 #### [v0.1.4](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.4)
 
