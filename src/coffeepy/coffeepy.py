@@ -70,7 +70,7 @@ def run(runtime=None, no_animation=False):
         duration = runtime * 60
 
     #this disables animation when used as a module
-    if no_animation:
+    if no_animation == True:
         args.no_animation = True
 
     proc = None
