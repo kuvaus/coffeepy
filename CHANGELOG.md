@@ -1,10 +1,11 @@
 
 ## Changelog
 
-#### [Upcoming](https///github.com/kuvaus/coffeepy/compare/v0.1.5...HEAD)
+#### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.5...HEAD)
 
 - Corrected Python requirements to 3.8 and newer
-- Time can now be a float so you can run it for less than 1 minute
+- Time can now be a float so you can run it more accurately
+- Add tests
 
 #### [v0.1.5](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.5)
 

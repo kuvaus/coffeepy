@@ -46,7 +46,7 @@ def check_windows_terminal():
     else:
         return False
 
-def run(runtime=None, no_animation=False):
+def parse_args(args=None):
     parser = argparse.ArgumentParser(description='Coffeepy (v'+version('coffeepy')+') ☕️ prevents the system from sleeping.\n'
                                                  'You can set the time with -t flag\n'
                                                  'Made by kuvaus',
@@ -55,25 +55,22 @@ def run(runtime=None, no_animation=False):
     parser.add_argument('-t', '--time', type=float, default=0, help='Optional: Duration of animation in minutes. Use 0 for indefinite duration')
     parser.add_argument('-a', '--no-animation', action='store_true', help='Optional: Disable animation')
 
-    args = parser.parse_args()
+    return parser.parse_args(args)
+    
+def run(runtime=0, no_animation=False):
 
+    args = None
+    if runtime > 0 or no_animation:
+        args = ['-t', str(runtime)]
+        if no_animation:
+            args.append('-a')
+
+    args = parse_args(args)
+        
     if args.time == 0:
         duration = float('inf')  # Set duration to infinity
     else:
         duration = args.time * 60  # Convert minutes to seconds
-    
-    #if time is provided as run argument, it will overwrite args
-    #this is only relevant when coffeepy is run as a python module
-    if runtime is None:
-        duration = duration
-    elif runtime == 0:
-        duration = float('inf')
-    else:
-        duration = runtime * 60
-
-    #this disables animation when used as a module
-    if no_animation == True:
-        args.no_animation = True
 
     proc = None
 
