@@ -136,30 +136,35 @@ if check_caffeinate():
 
 # macOS
 # Use mock to simulate 'check_caffeinate'
-@patch('subprocess.Popen')
+#
 @patch('sys.platform', new='darwin')
+@patch('subprocess.Popen')
 @patch('subprocess.check_output')
-def test_run_on_linux_with_caffeinate(self, mock_subproc, mock_popen):
+def test_run_on_linux_with_caffeinate(mock_subproc, mock_popen):
     mock_subproc.return_value = '/usr/bin/caffeinate'
     mock_popen.return_value.returncode = 0
     runtime = 0.01
     run(runtime)
     mock_popen.assert_called_once_with(['caffeinate', '-dims'])
 
+#
 # Linux and caffeinate
 # Use mock to simulate 'check_caffeinate'
-@patch('subprocess.Popen')
+#
 @patch('sys.platform', new='linux')
+@patch('subprocess.Popen')
 @patch('subprocess.check_output')
-def test_run_on_linux_with_caffeinate(self, mock_subproc, mock_popen):
+def test_run_on_linux_with_caffeinate(mock_subproc, mock_popen):
     mock_subproc.return_value = '/usr/bin/caffeinate'
     mock_popen.return_value.returncode = 0
     runtime = 0.01
     run(runtime)
     mock_popen.assert_called_once_with(['caffeinate', '-dims'])
 
+#
 # Linux
 # Use mock to simulate 'subprocess.Popen'
+#
 @patch('sys.platform', new='linux')
 @patch('subprocess.Popen')
 @patch('subprocess.check_output')
@@ -171,8 +176,10 @@ def test_run_on_linux_without_caffeinate(mock_subproc, mock_popen):
     calls = [call(['xset', 's', 'off']), call(['xset', '-dpms'])]
     mock_popen.assert_has_calls(calls, any_order=True)
 
+#
 # Windows
 # Use mock to simulate 'ctypes.windll.kernel32.SetThreadExecutionState'
+#
 @patch('sys.platform', new='win32')
 @patch('ctypes.windll', create=True)
 def test_platform_windows(self):
