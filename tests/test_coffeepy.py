@@ -119,21 +119,26 @@ def test_argument_parsing_no_animation():
 # Test the run function
 # Then test run with macos, linux and windows
 #
-
+if check_caffeinate() == False:
+    @patch('subprocess.Popen')
 def test_timed_run():
     runtime = 0.01
-#    run(runtime)
+    run(runtime)
 
+if check_caffeinate() == False:
+    @patch('subprocess.Popen')
 def test_timed_run_with_no_anim():
     runtime = 0.01
     no_animation = True
-#    run(runtime,no_animation)
+    run(runtime,no_animation)
 
 # Use mock to simulate 'subprocess.Popen'
+if check_caffeinate() == False:
+    @patch('subprocess.Popen')
 @patch('sys.platform', 'darwin')
 def test_platform_mac():
     runtime = 0.01
-#    run(runtime)
+    run(runtime)
 
 # Use mock to simulate 'subprocess.Popen'
 @patch('sys.platform', 'linux')
