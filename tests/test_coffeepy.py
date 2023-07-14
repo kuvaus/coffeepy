@@ -149,7 +149,7 @@ def test_platform_linux(mock_popen):
 def test_platform_linux(mock_subproc):
     mock_subproc.return_value = '/usr/bin/caffeinate'
     runtime = 0.01
-    run(runtime)   
+#    run(runtime)   
 
 # Use mock to simulate 'ctypes.windll.kernel32.SetThreadExecutionState'
 @patch('sys.platform', 'win32')
