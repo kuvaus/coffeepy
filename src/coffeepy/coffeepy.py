@@ -52,7 +52,7 @@ def run(runtime=None, no_animation=False):
                                                  'Made by kuvaus',
                                                  formatter_class=argparse.RawTextHelpFormatter)
 
-    parser.add_argument('-t', '--time', type=int, default=0, help='Optional: Duration of animation in minutes. Use 0 for indefinite duration')
+    parser.add_argument('-t', '--time', type=float, default=0, help='Optional: Duration of animation in minutes. Use 0 for indefinite duration')
     parser.add_argument('-a', '--no-animation', action='store_true', help='Optional: Disable animation')
 
     args = parser.parse_args()
@@ -119,7 +119,7 @@ def run(runtime=None, no_animation=False):
             subprocess.Popen(['xset', '+dpms'])
         if 'win32' in sys.platform:
             ctypes.windll.kernel32.SetThreadExecutionState(0x80000000)
-        sys.exit()
+        #sys.exit(0)
 
 
 if __name__ == "__main__":
