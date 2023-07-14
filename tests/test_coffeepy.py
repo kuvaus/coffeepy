@@ -163,12 +163,44 @@ else:
 #    run(runtime)        
 
 # Use mock to simulate 'check_caffeinate'
-@patch('sys.platform', 'linux')
+#@patch('sys.platform', 'linux')
+#@patch('subprocess.Popen')
+#def test_platform_linux_caffeine(mock_subproc):
+#    runtime = 0.01
+#    mock_subproc.return_value.returncode = 0
+#    run(runtime)   
+
+
 @patch('subprocess.Popen')
-def test_platform_linux_caffeine(mock_subproc):
+@patch('sys.platform', new='linux')
+@patch('coffeepy.check_caffeinate', return_value=True)  # replace with the actual import
+@patch('subprocess.check_output')
+def test_run_on_linux_with_caffeinate(self, mock_subproc, mock_popen):
+    mock_subproc.return_value = '/usr/bin/caffeinate'
     runtime = 0.01
-    mock_subproc.return_value.returncode = 0
-    #run(runtime)   
+    run(runtime)
+    mock_popen.assert_called_once_with(['caffeinate', '-dims'])
+    
+@patch('subprocess.Popen')
+@patch('sys.platform', new='linux')
+@patch('coffeepy.check_caffeinate', return_value=False)  # replace with the actual import
+@patch('subprocess.check_output')
+def test_run_on_linux_without_caffeinate(self, mock_subproc, mock_popen):
+    mock_subproc.side_effect = subprocess.CalledProcessError(1, 'which')
+    runtime = 0.01
+    run(runtime)
+    calls = [call(['xset', 's', 'off']), call(['xset', '-dpms'])]
+    mock_popen.assert_has_calls(calls, any_order=True)
+
+
+
+
+
+
+
+
+
+
 
 # Use mock to simulate 'ctypes.windll.kernel32.SetThreadExecutionState'
 @patch('sys.platform', 'win32')
