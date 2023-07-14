@@ -119,26 +119,41 @@ def test_argument_parsing_no_animation():
 # Test the run function
 # Then test run with macos, linux and windows
 #
-if check_caffeinate() == False:
-    @patch('subprocess.Popen')
-def test_timed_run():
-    runtime = 0.01
-    run(runtime)
 
-if check_caffeinate() == False:
-    @patch('subprocess.Popen')
-def test_timed_run_with_no_anim():
-    runtime = 0.01
-    no_animation = True
-    run(runtime,no_animation)
+if check_caffeinate():
+    def test_timed_run():
+        runtime = 0.01
+        run(runtime)
 
-# Use mock to simulate 'subprocess.Popen'
-if check_caffeinate() == False:
+    def test_timed_run():
+        runtime = 0.01
+        run(runtime)
+
+    # Use mock to simulate 'subprocess.Popen'
+    @patch('sys.platform', 'darwin')
+    def test_platform_mac():
+        runtime = 0.01
+        run(runtime)
+
+else:
     @patch('subprocess.Popen')
-@patch('sys.platform', 'darwin')
-def test_platform_mac():
-    runtime = 0.01
-    run(runtime)
+    def test_timed_run(mock_subproc):
+        runtime = 0.01
+        run(runtime)
+
+
+    @patch('subprocess.Popen')
+    def test_timed_run(mock_subproc):
+        runtime = 0.01
+        run(runtime)
+
+    # Use mock to simulate 'subprocess.Popen'
+    @patch('sys.platform', 'darwin')
+    @patch('subprocess.Popen')
+    def test_platform_mac(mock_subproc):
+        runtime = 0.01
+        run(runtime)
+
 
 # Use mock to simulate 'subprocess.Popen'
 @patch('sys.platform', 'linux')
@@ -154,7 +169,7 @@ def test_platform_linux(mock_popen):
 def test_platform_linux(mock_subproc):
     mock_subproc.return_value = '/usr/bin/caffeinate'
     runtime = 0.01
-#    run(runtime)   
+    run(runtime)   
 
 # Use mock to simulate 'ctypes.windll.kernel32.SetThreadExecutionState'
 @patch('sys.platform', 'win32')
