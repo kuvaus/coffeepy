@@ -130,15 +130,25 @@ def test_timed_run_with_no_anim():
 
 # Use mock to simulate 'subprocess.Popen'
 @patch('sys.platform', 'darwin')
-def test_platform_linux():
+def test_platform_mac():
     runtime = 0.01
     run(runtime)
 
-# Use mock to simulate 'check_caffeinate' and 'subprocess.Popen'
+# Use mock to simulate 'subprocess.Popen'
 @patch('sys.platform', 'linux')
-def test_platform_mac():
+@patch('subprocess.Popen')
+def test_platform_linux(mock_popen):
+    mock_popen.return_value.returncode = 0
     runtime = 0.01
     run(runtime)        
+
+# Use mock to simulate 'check_caffeinate'
+@patch('sys.platform', 'linux')
+@patch('subprocess.check_output')
+def test_platform_linux(mock_subproc):
+    mock_subproc.return_value = '/usr/bin/caffeinate'
+    runtime = 0.01
+    run(runtime)   
 
 # Use mock to simulate 'ctypes.windll.kernel32.SetThreadExecutionState'
 @patch('sys.platform', 'win32')
