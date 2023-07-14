@@ -129,25 +129,25 @@ if check_caffeinate():
         runtime = 0.01
         run(runtime)
 
-    # Use mock to simulate 'subprocess.Popen'
-    @patch('sys.platform', 'darwin')
-    def test_platform_mac():
-        runtime = 0.01
-        run(runtime)
+#    # Use mock to simulate 'subprocess.Popen'
+#    @patch('sys.platform', 'darwin')
+#    def test_platform_mac():
+#        runtime = 0.01
+#        run(runtime)
 
-else:
-    @patch('subprocess.Popen')
-    def test_timed_run(mock_popen):
-        mock_popen.return_value.returncode = 0
-        runtime = 0.01
-        run(runtime)
+#else:
+#    @patch('subprocess.Popen')
+#    def test_timed_run(mock_popen):
+#        mock_popen.return_value.returncode = 0
+#        runtime = 0.01
+#        run(runtime)
 
 
-    @patch('subprocess.Popen')
-    def test_timed_run(mock_popen):
-        mock_popen.return_value.returncode = 0
-        runtime = 0.01
-        run(runtime)
+#    @patch('subprocess.Popen')
+#    def test_timed_run(mock_popen):
+#        mock_popen.return_value.returncode = 0
+#        runtime = 0.01
+#        run(runtime)
 
 
 #class MockPopen(MagicMock):
@@ -170,13 +170,24 @@ else:
 #    mock_subproc.return_value.returncode = 0
 #    run(runtime)   
 
-
+@patch('subprocess.Popen')
+@patch('sys.platform', new='darwin')
+@patch('coffeepy.check_caffeinate', return_value=True)  # replace with the actual import
+@patch('subprocess.check_output')
+def test_run_on_linux_with_caffeinate(self, mock_subproc, mock_popen):
+    mock_subproc.return_value = '/usr/bin/caffeinate'
+    mock_popen.return_value.returncode = 0
+    runtime = 0.01
+    run(runtime)
+    mock_popen.assert_called_once_with(['caffeinate', '-dims'])
+    
 @patch('subprocess.Popen')
 @patch('sys.platform', new='linux')
 @patch('coffeepy.check_caffeinate', return_value=True)  # replace with the actual import
 @patch('subprocess.check_output')
 def test_run_on_linux_with_caffeinate(self, mock_subproc, mock_popen):
     mock_subproc.return_value = '/usr/bin/caffeinate'
+    mock_popen.return_value.returncode = 0
     runtime = 0.01
     run(runtime)
     mock_popen.assert_called_once_with(['caffeinate', '-dims'])
@@ -187,6 +198,7 @@ def test_run_on_linux_with_caffeinate(self, mock_subproc, mock_popen):
 @patch('subprocess.check_output')
 def test_run_on_linux_without_caffeinate(self, mock_subproc, mock_popen):
     mock_subproc.side_effect = subprocess.CalledProcessError(1, 'which')
+    mock_popen.return_value.returncode = 0
     runtime = 0.01
     run(runtime)
     calls = [call(['xset', 's', 'off']), call(['xset', '-dpms'])]
