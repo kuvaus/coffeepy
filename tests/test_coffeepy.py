@@ -137,14 +137,14 @@ if check_caffeinate():
 
 else:
     @patch('subprocess.Popen')
-    def test_timed_run(mock_subproc):
+    def test_timed_run(mock_popen):
         mock_popen.return_value.returncode = 0
         runtime = 0.01
         run(runtime)
 
 
     @patch('subprocess.Popen')
-    def test_timed_run(mock_subproc):
+    def test_timed_run(mock_popen):
         mock_popen.return_value.returncode = 0
         runtime = 0.01
         run(runtime)
