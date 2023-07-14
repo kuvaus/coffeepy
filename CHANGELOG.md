@@ -1,11 +1,16 @@
 
 ## Changelog
 
-#### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.5...HEAD)
+#### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.6...HEAD)
+
+
+#### [v0.1.6](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.6)
+
+> 14 July 2023
 
 - Corrected Python requirements to 3.8 and newer
 - Time can now be a float so you can run it more accurately
-- Add tests
+- Add tests. Run the tests with `pytest`
 
 #### [v0.1.5](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.5)
 
