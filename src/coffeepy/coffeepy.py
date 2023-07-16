@@ -103,6 +103,8 @@ def run(runtime=0, no_animation=False):
                         display_animation(ascii_animation)
                 else:
                     display_animation()
+            else:
+                time.sleep(1)
 
     except KeyboardInterrupt:
         print('\nExiting')

@@ -3,6 +3,7 @@
 
 #### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.6...HEAD)
 
+- Significantly improved performance when animation is turned off
 
 #### [v0.1.6](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.6)
 
