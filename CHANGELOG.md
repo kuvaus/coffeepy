@@ -1,7 +1,11 @@
 
 ## Changelog
 
-#### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.6...HEAD)
+#### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.7...HEAD)
+
+#### [v0.1.7](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.7)
+
+> 16 July 2023
 
 - Significantly improved performance when animation is turned off
 - Improve tests
