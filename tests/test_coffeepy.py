@@ -130,8 +130,7 @@ if check_caffeinate():
         run(runtime)
 
 #
-# Test the run function
-# Then test run with macos, linux and windows
+# Test run on macos, linux and windows
 #
 
 # macOS
@@ -140,7 +139,7 @@ if check_caffeinate():
 @patch('sys.platform', new='darwin')
 @patch('subprocess.Popen')
 @patch('subprocess.check_output')
-def test_run_on_linux_with_caffeinate(mock_subproc, mock_popen):
+def test_platform_macos(mock_subproc, mock_popen):
     mock_subproc.return_value = '/usr/bin/caffeinate'
     mock_popen.return_value.returncode = 0
     runtime = 0.01
@@ -154,7 +153,7 @@ def test_run_on_linux_with_caffeinate(mock_subproc, mock_popen):
 @patch('sys.platform', new='linux')
 @patch('subprocess.Popen')
 @patch('subprocess.check_output')
-def test_run_on_linux_with_caffeinate(mock_subproc, mock_popen):
+def test_platform_linux_with_caffeinate(mock_subproc, mock_popen):
     mock_subproc.return_value = '/usr/bin/caffeinate'
     mock_popen.return_value.returncode = 0
     runtime = 0.01
@@ -168,7 +167,7 @@ def test_run_on_linux_with_caffeinate(mock_subproc, mock_popen):
 @patch('sys.platform', new='linux')
 @patch('subprocess.Popen')
 @patch('subprocess.check_output')
-def test_run_on_linux_without_caffeinate(mock_subproc, mock_popen):
+def test_plaform_linux_without_caffeinate(mock_subproc, mock_popen):
     mock_subproc.side_effect = subprocess.CalledProcessError(1, 'which')
     mock_popen.return_value.returncode = 0
     runtime = 0.01
@@ -185,4 +184,5 @@ def test_run_on_linux_without_caffeinate(mock_subproc, mock_popen):
 def test_platform_windows(self):
     runtime = 0.01
     run(runtime)
+
 
