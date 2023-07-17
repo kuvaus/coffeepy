@@ -1,5 +1,5 @@
-
-from importlib.metadata import version
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import ctypes
 import sys
@@ -7,6 +7,7 @@ import subprocess
 import time
 import argparse
 import os
+import warnings
 
 animation = [
     "  ☕️   ",
@@ -29,6 +30,15 @@ def display_animation(animation=animation):
         print('\r' + frame, end='')
         time.sleep(0.5)  # Adjust the delay time as desired
 
+def get_version(package):
+    if sys.version_info >= (3, 8):
+        from importlib.metadata import version
+    else:
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+            import pkg_resources
+            version = pkg_resources.get_distribution(package).version
+    return version
 
 def check_caffeinate():
     try:
@@ -49,7 +59,7 @@ def parse_args(args=None):
     if 'win32' in sys.platform and not check_windows_terminal():
         coffee_emoji = ""
 
-    description = 'Coffeepy (v'+version('coffeepy')+') '+coffee_emoji+""" prevents the system from sleeping.
+    description = 'Coffeepy (v'+get_version('coffeepy')+') '+coffee_emoji+""" prevents the system from sleeping.
 You can set the time with -t flag
 Made by kuvaus"""
 
