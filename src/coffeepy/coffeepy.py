@@ -33,12 +33,12 @@ def display_animation(animation=animation):
 def get_version(package):
     if sys.version_info >= (3, 8):
         from importlib.metadata import version
+        return version(package)
     else:
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
             import pkg_resources
-            version = pkg_resources.get_distribution(package).version
-    return version
+            return pkg_resources.get_distribution(package).version
 
 def check_caffeinate():
     try:
