@@ -47,6 +47,16 @@ def check_caffeinate():
     except subprocess.CalledProcessError:
         return False
 
+def check_x11():
+    try:
+        subprocess.check_output(['which', 'xset'])
+        return True
+
+    except subprocess.CalledProcessError:
+        print("You need to install either \'caffeinate\' or \'x11-xserver-utils\' package for this program to run")
+        return False
+
+
 def check_windows_terminal():
     if ('win32' in sys.platform) and (os.environ.get("WT_SESSION") is not None):
         return True
@@ -95,9 +105,11 @@ def run(runtime=0, no_animation=False):
         print('Running \'coffeepy\' on Linux to prevent the system from sleeping')
         if check_caffeinate():
             proc = subprocess.Popen(['caffeinate', '-dims'])
-        else:
+        elif check_x11():
             subprocess.Popen(['xset', 's', 'off'])
             subprocess.Popen(['xset', '-dpms'])
+        else:
+            sys.exit()
 
     elif 'win32' in sys.platform:
         print('Running \'coffeepy\' on Windows to prevent the system from sleeping')
