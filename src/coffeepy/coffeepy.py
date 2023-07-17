@@ -38,19 +38,22 @@ def check_caffeinate():
         return False
 
 def check_windows_terminal():
-    if 'win32' in sys.platform:
-        if os.environ.get("WT_SESSION") is not None:
-            return True
-        else:
-            return False
+    if ('win32' in sys.platform) and (os.environ.get("WT_SESSION") is not None):
+        return True
     else:
         return False
 
 def parse_args(args=None):
-    parser = argparse.ArgumentParser(description='Coffeepy (v'+version('coffeepy')+') ☕️ prevents the system from sleeping.\n'
-                                                 'You can set the time with -t flag\n'
-                                                 'Made by kuvaus',
-                                                 formatter_class=argparse.RawTextHelpFormatter)
+
+    coffee_emoji = "☕️"
+    if 'win32' in sys.platform and not check_windows_terminal():
+        coffee_emoji = ""
+
+    description = 'Coffeepy (v'+version('coffeepy')+') '+coffee_emoji+""" prevents the system from sleeping.
+You can set the time with -t flag
+Made by kuvaus"""
+
+    parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument('-t', '--time', type=float, default=0, help='Optional: Duration of animation in minutes. Use 0 for indefinite duration')
     parser.add_argument('-a', '--no-animation', action='store_true', help='Optional: Disable animation')
@@ -96,11 +99,8 @@ def run(runtime=0, no_animation=False):
         start_time = time.time()
         while time.time() - start_time < duration or duration == float('inf'):
             if not args.no_animation:
-                if 'win32' in sys.platform:
-                    if check_windows_terminal() == True:
-                        display_animation()
-                    else:
-                        display_animation(ascii_animation)
+                if 'win32' in sys.platform and not check_windows_terminal():
+                    display_animation(ascii_animation)
                 else:
                     display_animation()
             else:
@@ -118,7 +118,6 @@ def run(runtime=0, no_animation=False):
             subprocess.Popen(['xset', '+dpms'])
         if 'win32' in sys.platform:
             ctypes.windll.kernel32.SetThreadExecutionState(0x80000000)
-        #sys.exit(0)
 
 
 if __name__ == "__main__":

@@ -3,6 +3,8 @@
 
 #### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.7...HEAD)
 
+- Fix `--help` on windows systems  without unicode support 
+
 #### [v0.1.7](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.7)
 
 > 16 July 2023
