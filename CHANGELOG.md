@@ -4,7 +4,8 @@
 #### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.7...HEAD)
 
 - Fix `--help` on windows systems  without unicode support 
-- Add python3.7 support
+- Better error handling on Linux
+- Add Python 3.7 support
 
 #### [v0.1.7](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.7)
 

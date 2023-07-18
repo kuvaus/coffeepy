@@ -51,7 +51,6 @@ def check_x11():
     try:
         subprocess.check_output(['which', 'xset'])
         return True
-
     except subprocess.CalledProcessError:
         print("You need to install either \'caffeinate\' or \'x11-xserver-utils\' package for this program to run")
         return False
@@ -109,7 +108,7 @@ def run(runtime=0, no_animation=False):
             subprocess.Popen(['xset', 's', 'off'])
             subprocess.Popen(['xset', '-dpms'])
         else:
-            sys.exit()
+            sys.exit(0)
 
     elif 'win32' in sys.platform:
         print('Running \'coffeepy\' on Windows to prevent the system from sleeping')

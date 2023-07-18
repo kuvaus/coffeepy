@@ -162,18 +162,45 @@ def test_platform_linux_with_caffeinate(mock_subproc, mock_popen):
 
 #
 # Linux
-# Use mock to simulate 'subprocess.Popen'
+# Use mock to simulate 'check_x11'
 #
+
+#need to return error on caffeinate but success on xset
+def side_effect(arg):
+    if arg == ['which', 'caffeinate']:
+        raise subprocess.CalledProcessError(1, 'which')
+    elif arg == ['which', 'xset']:
+        return '/opt/X11/bin/xset'.encode()  # check_output returns bytes in Python 3
+    else:
+        return None  # default return value
+
 @patch('sys.platform', new='linux')
 @patch('subprocess.Popen')
-@patch('subprocess.check_output')
+@patch('subprocess.check_output', side_effect=side_effect)
 def test_plaform_linux_without_caffeinate(mock_subproc, mock_popen):
-    mock_subproc.side_effect = subprocess.CalledProcessError(1, 'which')
     mock_popen.return_value.returncode = 0
     runtime = 0.01
     run(runtime)
     calls = [call(['xset', 's', 'off']), call(['xset', '-dpms'])]
     mock_popen.assert_has_calls(calls, any_order=True)
+
+#
+# Linux
+# 
+#
+@patch('sys.platform', new='linux')
+@patch('subprocess.Popen')
+@patch('subprocess.check_output')
+def test_plaform_linux_without_caffeinate_or_x11(mock_subproc, mock_popen, capsys):
+    with pytest.raises(SystemExit) as excinfo:
+        mock_subproc.side_effect = subprocess.CalledProcessError(1, 'which')
+        mock_popen.return_value.returncode = 0
+        runtime = 0.01
+        run(runtime)
+
+    out, err = capsys.readouterr()
+    assert "You need to install either 'caffeinate' or 'x11-xserver-utils' package for this program to run" in out
+    assert excinfo.value.code == 0
 
 #
 # Windows
