@@ -5,6 +5,8 @@
 
 #### [v0.1.8](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.8)
 
+> 22 July 2023
+
 - Fix `--help` on windows systems  without unicode support 
 - Better error handling on Linux
 - Add Python 3.7 support
