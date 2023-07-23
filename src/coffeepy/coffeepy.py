@@ -82,13 +82,6 @@ def unset_dbus_awake(cookie):
         msg = jeepney.new_method_call(proxy, "UnInhibit", "u", (cookie,))
         connection.send_and_get_reply(msg)
 
-#def check_x11():
-#    try:
-#        subprocess.check_output(['which', 'xset'])
-#        return True
-#    except subprocess.CalledProcessError:
-#        print("You need to install either \'caffeinate\' or \'x11-xserver-utils\' package for this program to run")
-#        return False
 
 
 def parse_args(args=None):
@@ -135,18 +128,12 @@ def run(runtime=0, no_animation=False):
         if check_caffeinate():
             proc = subprocess.Popen(['caffeinate', '-dims'])
         else:
-            # Keep system awake using DBUS
+            # Check for DBUS
             if connection is None:
                 print("You need to install either \'dbus\' or \'caffeinate\' package for this program to run")
                 sys.exit(0)
+            # Keep system awake using DBUS
             cookie = set_dbus_awake()
-            
-            #if cookie is None:
-            #    if check_x11():
-            #        subprocess.Popen(['xset', 's', 'off'])
-            #        subprocess.Popen(['xset', '-dpms'])
-            #    else:
-            #        sys.exit(0)
 
     elif 'win32' in sys.platform:
         print('Running \'coffeepy\' on Windows to prevent the system from sleeping')
@@ -172,10 +159,8 @@ def run(runtime=0, no_animation=False):
         if proc:
             proc.terminate()
         if 'linux' in sys.platform and not check_caffeinate():
+            # Reset DBUS connection
             unset_dbus_awake(cookie)
-            # Reset xset settings
-            #subprocess.Popen(['xset', 's', 'on'])
-            #subprocess.Popen(['xset', '+dpms'])
         if 'win32' in sys.platform:
             ctypes.windll.kernel32.SetThreadExecutionState(0x80000000)
 
