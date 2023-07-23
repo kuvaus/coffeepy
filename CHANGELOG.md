@@ -1,12 +1,17 @@
 
 ## Changelog
 
-#### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.8...HEAD)
+#### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.9...HEAD)
 
-- Finally works properly on various linux systems:
-- Use DBUS on linux to prevent system from sleeping
-- Use systemd method on linux as a fallback method
-- Deprecate old linux method of using xset
+
+#### [v0.1.9](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.9)
+
+> 23 July 2023
+
+- Finally works properly on various linux systems
+- Use `DBUS` on linux to prevent system from sleeping
+- Use `systemd` on linux as a fallback method
+- Deprecate old linux method of using `xset`
 - Automatic release notes
 - Improve tests
 
