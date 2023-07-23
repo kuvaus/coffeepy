@@ -3,11 +3,18 @@
 
 #### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.8...HEAD)
 
+- Finally works properly on various linux systems:
+- Use DBUS on linux to prevent system from sleeping
+- Use systemd method on linux as a fallback method
+- Deprecate old linux method of using xset
+- Automatic release notes
+- Improve tests
+
 #### [v0.1.8](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.8)
 
 > 22 July 2023
 
-- Fix `--help` on windows systems  without unicode support 
+- Fix `--help` on windows systems without unicode support 
 - Better error handling on Linux
 - Add Python 3.7 support
 

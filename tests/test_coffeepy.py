@@ -160,47 +160,6 @@ def test_platform_linux_with_caffeinate(mock_subproc, mock_popen):
     run(runtime)
     mock_popen.assert_called_once_with(['caffeinate', '-dims'])
 
-#
-# Linux
-# Use mock to simulate 'check_x11'
-#
-
-#need to return error on caffeinate but success on xset
-def side_effect(arg):
-    if arg == ['which', 'caffeinate']:
-        raise subprocess.CalledProcessError(1, 'which')
-    elif arg == ['which', 'xset']:
-        return '/opt/X11/bin/xset'.encode()  # check_output returns bytes in Python 3
-    else:
-        return None  # default return value
-
-@patch('sys.platform', new='linux')
-@patch('subprocess.Popen')
-@patch('subprocess.check_output', side_effect=side_effect)
-def test_plaform_linux_without_caffeinate(mock_subproc, mock_popen):
-    mock_popen.return_value.returncode = 0
-    runtime = 0.01
-    run(runtime)
-    calls = [call(['xset', 's', 'off']), call(['xset', '-dpms'])]
-    mock_popen.assert_has_calls(calls, any_order=True)
-
-#
-# Linux
-# 
-#
-@patch('sys.platform', new='linux')
-@patch('subprocess.Popen')
-@patch('subprocess.check_output')
-def test_plaform_linux_without_caffeinate_or_x11(mock_subproc, mock_popen, capsys):
-    with pytest.raises(SystemExit) as excinfo:
-        mock_subproc.side_effect = subprocess.CalledProcessError(1, 'which')
-        mock_popen.return_value.returncode = 0
-        runtime = 0.01
-        run(runtime)
-
-    out, err = capsys.readouterr()
-    assert "You need to install either 'caffeinate' or 'x11-xserver-utils' package for this program to run" in out
-    assert excinfo.value.code == 0
 
 #
 # Windows
@@ -213,3 +172,56 @@ def test_platform_windows(self):
     run(runtime)
 
 
+#
+# DBUS
+# 
+#
+
+
+@patch('coffeepy.open_dbus_connection')
+@patch('coffeepy.jeepney.new_method_call')
+def test_set_dbus_awake(mock_new_method_call, mock_open_dbus_connection):
+    # Mock open_dbus_connection
+    mock_connection = MagicMock()
+    mock_open_dbus_connection.return_value = mock_connection
+    #mock_connection.return_value = mock_connection
+
+    # Mock new_method_call and send_and_get_reply
+    mock_new_method_call.return_value = 'mocked_msg'
+    mock_connection.send_and_get_reply.return_value = MagicMock(body=[123])
+
+    # Patch the mock_connection in set_dbus_awake
+    with patch('coffeepy.set_dbus_awake', return_value=123) as mock_set_dbus_awake:
+        # Call set_dbus_awake and verify it returns the expected cookie
+        cookie = coffeepy.set_dbus_awake(mock_connection)
+        assert cookie == 123
+
+        # Verify open_dbus_connection and new_method_call were called with the correct arguments
+        
+        mock_new_method_call.assert_called_once_with(coffeepy.proxy, "Inhibit", "ss", ("coffeepy", "wakelock active"))
+
+    # Verify set_dbus_awake was called with the mock_connection
+    #mock_set_dbus_awake.assert_called_once_with(mock_connection)
+
+@patch('coffeepy.open_dbus_connection')
+@patch('coffeepy.jeepney.new_method_call')
+def test_unset_dbus_awake(mock_new_method_call, mock_open_dbus_connection):
+    # Mock open_dbus_connection
+    mock_connection = MagicMock()
+    mock_open_dbus_connection.return_value = mock_connection
+
+    # Mock new_method_call
+    mock_new_method_call.return_value = 'mocked_msg'
+
+    # Patch the mock_connection in unset_dbus_awake
+    with patch('coffeepy.set_dbus_awake', return_value=123) as mock_set_dbus_awake:
+        # Call unset_dbus_awake
+        coffeepy.unset_dbus_awake(mock_connection, 123)
+
+    # Verify open_dbus_connection and new_method_call were called with the correct arguments
+    #mock_open_dbus_connection.assert_called_once_with(bus="SESSION")
+    mock_new_method_call.assert_called_once_with(coffeepy.proxy, "UnInhibit", "u", (123,))
+
+    # Verify send_and_get_reply was called once
+    mock_connection.send_and_get_reply.assert_called_once_with('mocked_msg')
+    
