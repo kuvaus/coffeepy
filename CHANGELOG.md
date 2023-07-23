@@ -21,7 +21,7 @@
 > 23 July 2023
 
 - Finally works properly on various linux systems
-- Use `DBUS` on linux to prevent system from sleeping
+- Use `DBUS` on linux to prevent system from sleeping  [`#1`](https://github.com/kuvaus/coffeepy/pull/1)
 - Use `systemd` on linux as a fallback method
 - Deprecate old linux method of using `xset`
 - Automatic release notes
@@ -31,7 +31,7 @@
 
 > 22 July 2023
 
-- Fix `--help` on windows systems without unicode support 
+- Fix `--help` on windows systems without unicode support
 - Better error handling on Linux
 - Add Python 3.7 support
 
