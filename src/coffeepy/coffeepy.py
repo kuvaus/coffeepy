@@ -156,7 +156,7 @@ def run(runtime=0, no_animation=False):
 
     elif 'win32' in sys.platform:
         print('Running \'coffeepy\' on Windows to prevent the system from sleeping')
-        ctypes.windll.kernel32.SetThreadExecutionState(0x80000002)
+        ctypes.windll.kernel32.SetThreadExecutionState(0x80000003)
 
     print('Press Ctrl-C to quit')
     
