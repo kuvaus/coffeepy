@@ -8,9 +8,10 @@ import time
 import argparse
 import os
 import warnings
-import jeepney
-from jeepney.io.blocking import open_dbus_connection
 
+if 'linux' in sys.platform:
+    import jeepney
+    from jeepney.io.blocking import open_dbus_connection
 
 animation = [
     "  ☕️   ",
@@ -59,7 +60,7 @@ def check_windows_terminal():
     else:
         return False
 
-# On Linux use jeepney
+# On Linux use DBUS
 def get_connection():
     try:
         connection = open_dbus_connection(bus="SESSION")
@@ -68,9 +69,8 @@ def get_connection():
         connection = None
     return connection
 
-proxy = jeepney.DBusAddress('/org/freedesktop/ScreenSaver', bus_name='org.freedesktop.ScreenSaver', interface='org.freedesktop.ScreenSaver')
-
 def set_dbus_awake(connection):
+    proxy = jeepney.DBusAddress('/org/freedesktop/ScreenSaver', bus_name='org.freedesktop.ScreenSaver', interface='org.freedesktop.ScreenSaver')
     msg = jeepney.new_method_call(proxy, "Inhibit", "ss", ("coffeepy", "wakelock active"))
     reply = connection.send_and_get_reply(msg)
     cookie = reply.body[0]
@@ -80,9 +80,11 @@ def unset_dbus_awake(connection, cookie):
     if cookie is None:
         return
     else:
+        proxy = jeepney.DBusAddress('/org/freedesktop/ScreenSaver', bus_name='org.freedesktop.ScreenSaver', interface='org.freedesktop.ScreenSaver')
         msg = jeepney.new_method_call(proxy, "UnInhibit", "u", (cookie,))
         connection.send_and_get_reply(msg)
 
+# On Linux use systemd if DBUS fails
 def set_systemd_mask():
     print("Trying with systemd (this will need sudo permissions)")
     result = subprocess.run(["systemctl", "mask", "sleep.target", "suspend.target", "hibernate.target", "hybrid-sleep.target"])
@@ -95,7 +97,8 @@ def unset_systemd_mask():
     if result.returncode != 0:
         print("Systemd failed.")
         sys.exit(0)
-        
+
+# Parse CLI arguments
 def parse_args(args=None):
 
     coffee_emoji = "☕️"
@@ -145,6 +148,7 @@ def run(runtime=0, no_animation=False):
             # Keep system awake using DBUS
                 cookie = set_dbus_awake(connection)
             else:
+            # Keep system awake using systemd
                 print("You need to install either \'dbus\' or \'caffeinate\' package for this program to run")
                 set_systemd_mask()
 
@@ -177,6 +181,7 @@ def run(runtime=0, no_animation=False):
                 # Reset DBUS connection
                 unset_dbus_awake(connection, cookie)
             else:
+                # Reset systemd changes
                 unset_systemd_mask()
         if 'win32' in sys.platform:
             ctypes.windll.kernel32.SetThreadExecutionState(0x80000000)

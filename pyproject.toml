@@ -5,16 +5,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "coffeepy"
-version = "0.1.9"
+version = "0.2.0"
 authors = [
   { name="kuvaus", email="coffeepy@kuvaus.org" },
 ]
 dependencies = [
-    "jeepney"
+    "jeepney;sys_platform=='linux'"
 ]
 description = "Coffeepy prevents the system from sleeping"
 readme = "README.md"
-license = { file = "LICENSE"}
 requires-python = ">=3.7"
 classifiers = [
     "Operating System :: MacOS",
