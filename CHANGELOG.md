@@ -3,7 +3,9 @@
 
 #### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.8...HEAD)
 
+- Finally works properly on various linux systems:
 - Use DBUS on linux to prevent system from sleeping
+- Use systemd method on linux as a fallback method
 - Deprecate old linux method of using xset
 - Automatic release notes
 - Improve tests
