@@ -1,8 +1,14 @@
 
 ## Changelog
 
-#### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.2.0...HEAD)
+#### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.2.1...HEAD)
 
+#### [v0.2.1](https://github.com/kuvaus/coffeepy/releases/tag/v0.2.1)
+
+> 24 July 2023
+
+- Add ability to reset the system idle timer on Windows
+- This prevents computer from going to sleep even if no other programs are running
 
 #### [v0.2.0](https://github.com/kuvaus/coffeepy/releases/tag/v0.2.0)
 
