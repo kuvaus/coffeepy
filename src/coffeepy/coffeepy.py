@@ -111,7 +111,7 @@ Made by kuvaus"""
 
     parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
 
-    parser.add_argument('-t', '--time', type=float, default=0, help='Optional: Duration of animation in minutes. Use 0 for indefinite duration')
+    parser.add_argument('-t', '--time', type=float, default=0, help='Optional: Duration of run in minutes. Use 0 for infinite duration')
     parser.add_argument('-a', '--no-animation', action='store_true', help='Optional: Disable animation')
 
     return parser.parse_args(args)
