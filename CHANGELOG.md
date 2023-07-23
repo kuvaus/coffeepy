@@ -1,8 +1,14 @@
 
 ## Changelog
 
-#### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.1.9...HEAD)
+#### [Upcoming](https://github.com/kuvaus/coffeepy/compare/v0.2.0...HEAD)
 
+
+#### [v0.2.0](https://github.com/kuvaus/coffeepy/releases/tag/v0.2.0)
+
+> 23 July 2023
+
+- Simplify dependencies
 
 #### [v0.1.9](https://github.com/kuvaus/coffeepy/releases/tag/v0.1.9)
 

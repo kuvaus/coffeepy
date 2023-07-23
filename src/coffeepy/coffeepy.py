@@ -132,6 +132,7 @@ def run(runtime=0, no_animation=False):
         duration = args.time * 60  # Convert minutes to seconds
 
     proc = None
+    connection = None
 
     if 'darwin' in sys.platform:
         print('Running \'coffeepy\' on MacOS to prevent the system from sleeping')
